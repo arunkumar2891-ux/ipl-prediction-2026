@@ -2,7 +2,7 @@ export const api = {
 
  submitPrediction: async (payload) => {
    const API_URL = import.meta.env.VITE_API_URL;
-   console.log(import.meta.env.VITE_API_URL);
+
    const res = await fetch(`${API_URL}/api/prediction`, {
      method: "POST",
      headers: { "Content-Type": "application/json" },
