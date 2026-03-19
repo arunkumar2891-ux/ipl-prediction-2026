@@ -11,6 +11,7 @@ interface LeaderEntry {
   group: string;
   amount: number;
   winAmount: number;
+  matchNumber: number;
 }
 
 type SortKey = "name" | "amount" | "winAmount";
