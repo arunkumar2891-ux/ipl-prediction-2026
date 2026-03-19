@@ -1,73 +1,287 @@
-# Welcome to your Lovable project
+Below is a **clean, professional `README.md`** you can directly paste into your GitHub repository. It is structured the way open-source repos usually are: overview → features → architecture → setup → deployment → future enhancements.
 
-## Project info
+---
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+# 🏏 IPL Prediction Game
 
-## How can I edit this code?
+A modern **IPL match prediction web app** where users submit predictions for match winners before the game begins and compete on a **live leaderboard**. The platform includes **OTP-based authentication, automatic bid cut-off before match start, analytics, and leaderboard tracking**.
 
-There are several ways of editing your application.
+This project is designed to be lightweight, fast, and easily deployable on **Render** with a **Node.js backend and React frontend**.
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+# ✨ Features
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🔐 Authentication
 
-**Use your preferred IDE**
+* Email-based login
+* **6-digit OTP verification**
+* Secure OTP validation before allowing predictions
+* OTP paste support with modern multi-box input UI
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 🏏 Match Predictions
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+* Users select the predicted match winner
+* Predictions are **locked 15 minutes before match start**
+* Users can submit only **one prediction per match**
 
-Follow these steps:
+### ⏱ Automatic Cut-Off
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+* Prediction submission disabled automatically **15 minutes before match time**
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 📊 Leaderboard
 
-# Step 3: Install the necessary dependencies.
-npm i
+* Live leaderboard showing:
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+  * Total points
+  * Correct predictions
+  * Rank among participants
+
+### 📈 Analytics Dashboard
+
+* Prediction distribution
+* Accuracy metrics
+* Performance trends
+
+### 🎨 Modern UI
+
+* Built with:
+
+  * **React**
+  * **Tailwind CSS**
+  * **Framer Motion animations**
+* Responsive UI for desktop and mobile
+
+---
+
+# 🧱 Architecture
+
+```
+Frontend (React + Vite)
+│
+├── Match Cards
+├── Prediction Form
+├── OTP Authentication
+├── Leaderboard
+└── Analytics Dashboard
+│
+Backend (Node.js + Express)
+│
+├── OTP Generation & Validation
+├── Prediction Submission API
+├── Leaderboard API
+└── Match Data API
+│
+Database
+└── Stores users, predictions, match data
+```
+
+---
+
+# 📂 Project Structure
+
+```
+ipl-prediction-game
+│
+├── backend
+│   ├── server.js
+│   ├── routes
+│   ├── controllers
+│   └── services
+│
+├── src
+│   ├── components
+│   │   ├── MatchCard.tsx
+│   │   ├── PredictionForm.tsx
+│   │   ├── CountdownTimer.tsx
+│   │   ├── Leaderboard.tsx
+│   │   └── OTPInput.tsx
+│   │
+│   ├── pages
+│   │   ├── Home.tsx
+│   │   ├── Leaderboard.tsx
+│   │   └── Analytics.tsx
+│   │
+│   ├── data
+│   │   └── matchData.ts
+│   │
+│   ├── lib
+│   │   └── utils.ts
+│   │
+│   └── App.tsx
+│
+├── public
+├── package.json
+└── README.md
+```
+
+---
+
+# ⚙️ Installation
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/<your-username>/ipl-prediction-game.git
+cd ipl-prediction-game
+```
+
+---
+
+### 2️⃣ Install dependencies
+
+Frontend
+
+```bash
+npm install
+```
+
+Backend
+
+```bash
+cd backend
+npm install
+```
+
+---
+
+# ▶️ Running Locally
+
+### Start Backend
+
+```bash
+cd backend
+node server.js
+```
+
+Runs on:
+
+```
+http://localhost:5000
+```
+
+---
+
+### Start Frontend
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Runs on:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+http://localhost:8080
+```
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# 🌐 Deployment (Render)
 
-## What technologies are used for this project?
+This project is designed for **Render deployment**.
 
-This project is built with:
+### Frontend
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Deploy as a **Static Site**
 
-## How can I deploy this project?
+Build Command
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```
+npm run build
+```
 
-## Can I connect a custom domain to my Lovable project?
+Publish Directory
 
-Yes, you can!
+```
+dist
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Backend
+
+Deploy as a **Web Service**
+
+Start Command
+
+```
+node backend/server.js
+```
+
+---
+
+# 🧠 Key Business Rules
+
+| Rule             | Description                                         |
+| ---------------- | --------------------------------------------------- |
+| Prediction Limit | One prediction per match per user                   |
+| Cutoff Time      | Predictions close **15 minutes before match start** |
+| Authentication   | OTP verification required                           |
+| Leaderboard      | Based on correct predictions                        |
+
+---
+
+# 📊 Example Workflow
+
+1️⃣ User selects their email from dropdown
+2️⃣ OTP is sent to the email
+3️⃣ User verifies OTP
+4️⃣ User selects predicted match winner
+5️⃣ Prediction is saved
+6️⃣ After match result → leaderboard updates
+
+---
+
+# 🚀 Future Enhancements
+
+Possible improvements:
+
+* Admin panel to manage matches
+* Automatic match result ingestion
+* Slack / WhatsApp notifications
+* Historical season statistics
+* Multi-season support
+* Tie-breaker prediction (score / wickets)
+
+---
+
+# 🛠 Tech Stack
+
+| Layer     | Technology        |
+| --------- | ----------------- |
+| Frontend  | React + Vite      |
+| UI        | Tailwind CSS      |
+| Animation | Framer Motion     |
+| Backend   | Node.js + Express |
+| Auth      | OTP verification  |
+| Hosting   | Render            |
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+Steps:
+
+1. Fork the repo
+2. Create a feature branch
+3. Commit your changes
+4. Submit a Pull Request
+
+---
+
+# 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+If you'd like, I can also create a **much more impressive README with:**
+
+* screenshots
+* architecture diagram
+* badges (deploy, license, tech stack)
+* live demo section
+
+— which will make your GitHub repo look **10× more professional**.
