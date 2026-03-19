@@ -51,7 +51,7 @@ app.post("/api/prediction", async (req, res) => {
 
     const { matchStartUtc } = req.body;
 
-    if (!matchStart) {
+    if (!matchStartUtc) {
       return res.status(400).json({ error: "Match start time missing" });
     }
 
