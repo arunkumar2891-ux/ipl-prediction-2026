@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { api } from "@/api/api";
 import { validateEmail } from "@/lib/utils";
 import OtpInput from "@/components/OtpInput";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface PredictionFormProps {
   matchId: number;
@@ -17,7 +18,7 @@ interface OtpInputProps {
   setOtp: (value: string) => void;
   disabled?: boolean;
 }
-
+const queryClient = useQueryClient();
 const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled }: PredictionFormProps) => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -94,7 +95,9 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled }: PredictionFor
         matchNumber: matchId,
         selectedTeam
       });
-
+	  queryClient.invalidateQueries({
+ 		queryKey: ["leaderboard"]
+	  });
       setResponse(JSON.stringify(result, null, 2));
       setSubmitted(true);
 
