@@ -1,7 +1,3 @@
-Below is a **clean, professional `README.md`** you can directly paste into your GitHub repository. It is structured the way open-source repos usually are: overview → features → architecture → setup → deployment → future enhancements.
-
----
-
 # 🏏 IPL Prediction Game
 
 A modern **IPL match prediction web app** where users submit predictions for match winners before the game begins and compete on a **live leaderboard**. The platform includes **OTP-based authentication, automatic bid cut-off before match start, analytics, and leaderboard tracking**.
@@ -274,14 +270,3 @@ Steps:
 # 📜 License
 
 This project is licensed under the **MIT License**.
-
----
-
-If you'd like, I can also create a **much more impressive README with:**
-
-* screenshots
-* architecture diagram
-* badges (deploy, license, tech stack)
-* live demo section
-
-— which will make your GitHub repo look **10× more professional**.
