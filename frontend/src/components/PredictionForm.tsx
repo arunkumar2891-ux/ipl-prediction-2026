@@ -57,6 +57,7 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled }: PredictionFor
     setLoading(true);
 
     try {
+		console.log("api object:", api);
       await api.otp({
         email: email.trim().toLowerCase(),
         flow: "validateOTP",
