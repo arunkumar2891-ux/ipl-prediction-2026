@@ -9,8 +9,8 @@ import NotFound from "./pages/NotFound.tsx";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity, // keep data fresh
-      gcTime: Infinity, // keep cache until refresh
+      staleTime: Infinity,
+      gcTime: Infinity,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false
@@ -26,7 +26,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
