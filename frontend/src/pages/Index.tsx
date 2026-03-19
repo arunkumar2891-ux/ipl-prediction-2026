@@ -19,7 +19,7 @@ type TabId = (typeof tabs)[number]["id"];
 const Index = () => {
   const [activeTab, setActiveTab] = useState<TabId>("predict");
   const todaysMatches = getTodaysMatches();
-  console.log(import.meta.env.VITE_API_URL);
+  //console.log(import.meta.env.VITE_API_URL);
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
