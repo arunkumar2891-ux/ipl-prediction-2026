@@ -44,10 +44,10 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled, matchStart }: P
 	  //console.log("validateOTP triggered", { email, otp });
     setError(null);
 
-    if (!email.trim()) {
+    /*if (!email.trim()) {
       setError("Please enter your email.");
       return;
-    }
+    }*/
    //console.log("validateEmail result:", validateEmail(email.trim()));
     /*if (!validateEmail(email.trim())) {
       setError("Email not registered.");
