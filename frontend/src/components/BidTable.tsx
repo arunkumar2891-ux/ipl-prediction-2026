@@ -5,7 +5,7 @@ import { api } from "@/api/api";
 import { aggregateBids } from "@/lib/utils";
 
 const BidTable = () => {
-  const { data: bids = [], isLoading, isError } = useQuery({
+  const { data: bids = [], isLoading, isError } = useQuery<any[]>({
   queryKey: ["bids"],
   queryFn: async () => {
     const result = await api.getBids();
@@ -24,8 +24,8 @@ const BidTable = () => {
     );
   }
 
-  if (isError) return <div className="text-center py-20 text-destructive text-sm">{error}</div>;
-
+  //if (isError) return <div className="text-center py-20 text-destructive text-sm">{error}</div>;
+  if (isError) return <div className="text-center py-20 text-destructive text-sm">Fetch Error. Please try again.</div>;
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Raw Bid Log */}
