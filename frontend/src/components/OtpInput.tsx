@@ -30,7 +30,7 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent) => {
+  /*const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
 
     const pasted = e.clipboardData
@@ -48,6 +48,30 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
 
     const nextIndex = pasted.length < 6 ? pasted.length : 5;
     inputs.current[nextIndex]?.focus();
+  };*/
+  
+  const handlePaste = (e: React.ClipboardEvent) => {
+  const pasted = e.clipboardData
+    .getData("text")
+    .replace(/\D/g, "")
+    .slice(0, 6);
+
+  if (!pasted) return;
+
+  e.preventDefault();
+
+  const otpArray = pasted.split("");
+
+  setOtp(pasted);
+
+  otpArray.forEach((digit, i) => {
+    if (inputs.current[i]) {
+      inputs.current[i]!.value = digit;
+    }
+  });
+  const nextIndex = Math.min(pasted.length - 1, 5);
+  inputs.current[nextIndex]?.focus();
+  //inputs.current[Math.min(pasted.length, 5)]?.focus();
   };
 
   return (
@@ -55,7 +79,9 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
   {[...Array(6)].map((_, i) => (
     <Input
       key={i}
-      type="text"
+      type="tel"
+      inputMode="numeric"
+      pattern="[0-9]*"
       maxLength={1}
       disabled={disabled}
       ref={(el) => (inputs.current[i] = el)}
