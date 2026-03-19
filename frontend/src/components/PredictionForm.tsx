@@ -36,6 +36,7 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled }: PredictionFor
 	}
   }, [otp]);
   const handleValidateOtp = async () => {
+	  console.log("validateOTP triggered", { email, otp });
     setError(null);
 
     if (!email.trim()) {
