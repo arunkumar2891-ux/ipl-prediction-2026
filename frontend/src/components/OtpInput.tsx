@@ -51,22 +51,22 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
   };
 
   return (
-    <div className="flex gap-2 justify-center">
-      {[...Array(6)].map((_, i) => (
-        <Input
-          key={i}
-          type="text"
-          maxLength={1}
-          disabled={disabled}
-          ref={(el) => (inputs.current[i] = el)}
-          value={otp[i] || ""}
-          onChange={(e) => handleChange(e.target.value, i)}
-          onKeyDown={(e) => handleKeyDown(e, i)}
-          onPaste={handlePaste}
-          className="w-12 h-12 text-center text-lg font-semibold bg-secondary/30 border-border"
-        />
-      ))}
-    </div>
+   <div className="flex gap-2 justify-center w-full max-w-xs mx-auto">
+  {[...Array(6)].map((_, i) => (
+    <Input
+      key={i}
+      type="text"
+      maxLength={1}
+      disabled={disabled}
+      ref={(el) => (inputs.current[i] = el)}
+      value={otp[i] || ""}
+      onChange={(e) => handleChange(e.target.value, i)}
+      onKeyDown={(e) => handleKeyDown(e, i)}
+      onPaste={handlePaste}
+      className="flex-1 aspect-square max-w-[50px] text-center text-lg font-semibold bg-secondary/30 border-border focus:border-primary focus:ring-1 focus:ring-primary"
+    />
+  ))}
+</div>
   );
 };
 
