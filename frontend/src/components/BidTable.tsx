@@ -1,30 +1,22 @@
-import { useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { api } from "@/api/api";
 import { aggregateBids } from "@/lib/utils";
 
 const BidTable = () => {
-  const [bids, setBids] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchBids = async () => {
-      try {
-        const result = await api.getBids();
-        setBids(result || []);
-      } catch {
-        setError("Fetch Error. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBids();
-  }, []);
+  const { data: bids = [], isLoading, isError } = useQuery({
+  queryKey: ["bids"],
+  queryFn: async () => {
+    const result = await api.getBids();
+    return result || [];
+  }
+});
+ 
 
   const analytics = useMemo(() => aggregateBids(bids), [bids]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="h-8 w-8 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
@@ -32,7 +24,7 @@ const BidTable = () => {
     );
   }
 
-  if (error) return <div className="text-center py-20 text-destructive text-sm">{error}</div>;
+  if (isError) return <div className="text-center py-20 text-destructive text-sm">{error}</div>;
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
