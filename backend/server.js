@@ -12,7 +12,7 @@ app.use(express.json());
 
 const SNAP_BASE = "https://prod-paloaltonetworks-dev-cloud-fm.snaplogic.io/api/1/rest/feed-master/queue/PaloAltoNetworks-Dev/projects/Arunkumar%20J%20S";
 
-async function callSnap(url, method="GET", body=null) {
+async function callSnap(url, method = "GET", body = null) {
   const options = {
     method,
     headers: {
@@ -34,62 +34,62 @@ async function callSnap(url, method="GET", body=null) {
   return response.json();
 }
 
+/* ---------- Prediction ---------- */
+
 app.post("/api/prediction", async (req, res) => {
   try {
     const url = `${SNAP_BASE}/GetDataTask?bearer_token=${encodeURIComponent(process.env.SNAP_PREDICTION_TOKEN)}`;
-
     const data = await callSnap(url, "POST", req.body);
-
     res.json(data.response);
-
   } catch (err) {
-    res.status(500).json({error: err.message});
+    res.status(500).json({ error: err.message });
   }
 });
+
+/* ---------- Leaderboard ---------- */
 
 app.get("/api/leaderboard", async (req, res) => {
   try {
     const url = `${SNAP_BASE}/LeaderBoardAPITask?bearer_token=${encodeURIComponent(process.env.SNAP_LEADER_TOKEN)}`;
-
     const data = await callSnap(url);
-
     res.json(data.response);
-
   } catch (err) {
-    res.status(500).json({error: err.message});
+    res.status(500).json({ error: err.message });
   }
 });
+
+/* ---------- Bids ---------- */
 
 app.get("/api/bids", async (req, res) => {
   try {
     const url = `${SNAP_BASE}/Bid_APITask?bearer_token=${encodeURIComponent(process.env.SNAP_BID_TOKEN)}`;
-
     const data = await callSnap(url);
-
     res.json(data.response);
-
   } catch (err) {
-    res.status(500).json({error: err.message});
+    res.status(500).json({ error: err.message });
   }
 });
+
+/* ---------- OTP ---------- */
 
 app.post("/api/otp", async (req, res) => {
   try {
     const url = `${SNAP_BASE}/manageOTPUltra?bearer_token=${encodeURIComponent(process.env.SNAP_OTP_TOKEN)}`;
-
     const data = await callSnap(url, "POST", req.body);
-
     res.json(data);
-
   } catch (err) {
-    res.status(500).json({error: err.message});
+    res.status(500).json({ error: err.message });
   }
 });
+
+/* ---------- Health check (for keeping Render awake) ---------- */
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+/* ---------- Start server ---------- */
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-})
+});
