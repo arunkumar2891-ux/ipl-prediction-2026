@@ -1,9 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   server: {
     host: "::",
     port: 8080,
@@ -16,16 +15,16 @@ export default defineConfig(({ mode }) => ({
     },
   },
 
- plugins: [react()],
+  plugins: [react()],
 
   resolve: {
-  alias: {
-    "@": path.resolve(__dirname, "./src"),
-    react: path.resolve("./node_modules/react"),
-    "react-dom": path.resolve("./node_modules/react-dom")
-  },
-  dedupe: ["react", "react-dom"]
-}
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      react: path.resolve("./node_modules/react"),
+      "react-dom": path.resolve("./node_modules/react-dom"),
+    },
+    dedupe: ["react", "react-dom"],
+  },   // ← comma here was missing
 
   optimizeDeps: {
     include: ["react", "react-dom", "@tanstack/react-query"],
