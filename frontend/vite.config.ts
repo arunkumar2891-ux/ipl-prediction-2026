@@ -7,28 +7,27 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    hmr: {
-      overlay: false,
-    },
+    hmr: { overlay: false },
     proxy: {
       "/api": {
         target: "http://localhost:3001",
-        changeOrigin: true
-      }
-    }
+        changeOrigin: true,
+      },
+    },
   },
 
-  plugins: [
-    react(),
-    mode === "development" && componentTagger()
-  ].filter(Boolean),
+  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
 
- resolve: {
-  alias: {
-    "@": path.resolve(__dirname, "./src"),
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+    dedupe: ["react", "react-dom", "@tanstack/react-query"],
   },
-  dedupe: ["react", "react-dom", "@tanstack/react-query"],
-},
+
+  optimizeDeps: {
+    include: ["react", "react-dom", "@tanstack/react-query"],
+  },
 
   build: {
     sourcemap: false,
