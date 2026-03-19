@@ -36,11 +36,41 @@ async function callSnap(url, method = "GET", body = null) {
 
 /* ---------- Prediction ---------- */
 
-app.post("/api/prediction", async (req, res) => {
+/*app.post("/api/prediction", async (req, res) => {
   try {
     const url = `${SNAP_BASE}/GetDataTask?bearer_token=${encodeURIComponent(process.env.SNAP_PREDICTION_TOKEN)}`;
     const data = await callSnap(url, "POST", req.body);
     res.json(data.response);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});*/
+
+app.post("/api/prediction", async (req, res) => {
+  try {
+
+    const { matchStartUtc } = req.body;
+
+    if (!matchStart) {
+      return res.status(400).json({ error: "Match start time missing" });
+    }
+
+    const startTime = new Date(matchStartUtc);
+    const cutoff = new Date(startTime.getTime() - (15 * 60 * 1000));
+    const now = new Date();
+
+    if (now > cutoff) {
+      return res.status(403).json({
+        error: "Predictions closed 15 minutes before match start"
+      });
+    }
+
+    const url = `${SNAP_BASE}/GetDataTask?bearer_token=${encodeURIComponent(process.env.SNAP_PREDICTION_TOKEN)}`;
+
+    const data = await callSnap(url, "POST", req.body);
+
+    res.json(data.response);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
