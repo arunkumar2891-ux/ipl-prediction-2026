@@ -30,7 +30,7 @@ const Index = () => {
               <img
 				src="/favicon.ico"
 				alt="App icon"
-				className="h-15 w-55"
+				className="h-10 w-25"
 			/> 
 
           </div>
