@@ -19,7 +19,7 @@ type TabId = (typeof tabs)[number]["id"];
 const Index = () => {
   const [activeTab, setActiveTab] = useState<TabId>("predict");
   const todaysMatches = getTodaysMatches();
-
+  console.log(import.meta.env.VITE_API_URL);
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -30,7 +30,7 @@ const Index = () => {
               <img
 				src="/favicon.ico"
 				alt="App icon"
-				className="h-8 w-10"
+				className="h-10 w-15"
 			/> 
 
           </div>
