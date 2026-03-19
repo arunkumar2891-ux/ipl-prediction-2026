@@ -1,4 +1,5 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { api } from "@/api/api";
 import EmailGate from "@/components/EmailGate";
@@ -15,10 +16,24 @@ interface LeaderEntry {
 type SortKey = "name" | "amount" | "winAmount";
 
 const LeaderboardTable = () => {
+  const { data = [], isLoading, isError } = useQuery({
+  queryKey: ["leaderboard"],
+  queryFn: async () => {
+    const result = await api.getLeaderboard();
 
-  const [data, setData] = useState<LeaderEntry[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+    const payload = result ?? [];
+
+    const normalized: LeaderEntry[] = payload.map((x: any) => ({
+      name: x.Name,
+      group: x.Group,
+      amount: x.Amount,
+      winAmount: x.matchWinAmount,
+      matchNumber: x.matchNumber,
+    }));
+
+    return normalized;
+  }
+});
 
   const [sortKey, setSortKey] = useState<SortKey>("amount");
   const [sortAsc, setSortAsc] = useState(false);
@@ -28,32 +43,7 @@ const LeaderboardTable = () => {
 );
 
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await api.getLeaderboard();
-        console.log("API RESULT:", result);
-
-        const payload = result ?? [];
-
-        const normalized: LeaderEntry[] = payload.map((x: any) => ({
-          name: x.Name,
-          group: x.Group,
-          amount: x.Amount,
-          winAmount: x.matchWinAmount,
-          matchNumber: x.matchNumber,
-        }));
-
-        setData(normalized);
-      } catch {
-        setError("Leaderboard Fetch Error. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  
 
   const sorted = useMemo(() => {
     return [...data].sort((a, b) => {
@@ -83,8 +73,8 @@ const LeaderboardTable = () => {
   data: sorted.filter((x) => x.group === group),
 }));
 
-  if (loading) return <LoadingSpinner />;
-  if (error) return <div className="text-center py-20 text-destructive text-sm">{error}</div>;
+  if (isLoading) return <LoadingSpinner />;
+if (isError) return <div className="text-center py-20 text-destructive text-sm">Leaderboard Fetch Error. Please try again.</div>;
 
   /*if (!userGroups) {
     return <EmailGate onGroupDetected={setUserGroups} />
