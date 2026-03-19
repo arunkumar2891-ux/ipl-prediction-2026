@@ -86,6 +86,10 @@ app.post("/api/otp", async (req, res) => {
   }
 });
 
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 })
