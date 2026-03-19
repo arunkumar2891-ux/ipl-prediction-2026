@@ -10,7 +10,7 @@ interface OtpInputProps {
 const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const handleChange = (value: string, index: number) => {
+  /*const handleChange = (value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
     const newOtp = otp.split("");
@@ -22,7 +22,33 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
     if (value && index < 5) {
       inputs.current[index + 1]?.focus();
     }
-  };
+  };*/
+  const handleChange = (value: string, index: number) => {
+  const digits = value.replace(/\D/g, "");
+
+  if (!digits) return;
+
+  const newOtp = otp.split("");
+
+  if (digits.length > 1) {
+    digits.split("").forEach((d, i) => {
+      if (index + i < 6) {
+        newOtp[index + i] = d;
+      }
+    });
+
+    setOtp(newOtp.join(""));
+    inputs.current[Math.min(index + digits.length, 5)]?.focus();
+    return;
+  }
+
+  newOtp[index] = digits;
+  setOtp(newOtp.join(""));
+
+  if (index < 5) {
+    inputs.current[index + 1]?.focus();
+  }
+};
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
@@ -50,29 +76,28 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
     inputs.current[nextIndex]?.focus();
   };*/
   
-  const handlePaste = (e: React.ClipboardEvent) => {
-  const pasted = e.clipboardData
-    .getData("text")
-    .replace(/\D/g, "")
-    .slice(0, 6);
-
-  if (!pasted) return;
-
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
   e.preventDefault();
 
-  const otpArray = pasted.split("");
+  const pastedData = e.clipboardData.getData("text");
+  const digits = pastedData.replace(/\D/g, "").slice(0, 6);
 
-  setOtp(pasted);
+  if (!digits) return;
 
-  otpArray.forEach((digit, i) => {
-    if (inputs.current[i]) {
-      inputs.current[i]!.value = digit;
+  const otpArray = digits.split("");
+
+  setOtp(digits);
+
+  otpArray.forEach((digit, index) => {
+    const input = inputs.current[index];
+    if (input) {
+      input.value = digit;
     }
   });
-  const nextIndex = Math.min(pasted.length - 1, 5);
-  inputs.current[nextIndex]?.focus();
-  //inputs.current[Math.min(pasted.length, 5)]?.focus();
-  };
+
+  const focusIndex = Math.min(digits.length - 1, 5);
+  inputs.current[focusIndex]?.focus();
+};
 
   return (
    <div className="flex gap-2 justify-center w-full max-w-xs mx-auto">
