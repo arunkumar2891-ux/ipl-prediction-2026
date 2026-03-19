@@ -38,14 +38,14 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled }: PredictionFor
 	}
   }, [otp]);
   const handleValidateOtp = async () => {
-	  console.log("validateOTP triggered", { email, otp });
+	  //console.log("validateOTP triggered", { email, otp });
     setError(null);
 
     if (!email.trim()) {
       setError("Please enter your email.");
       return;
     }
-   console.log("validateEmail result:", validateEmail(email.trim()));
+   //console.log("validateEmail result:", validateEmail(email.trim()));
     if (!validateEmail(email.trim())) {
       setError("Email not registered.");
       return;
