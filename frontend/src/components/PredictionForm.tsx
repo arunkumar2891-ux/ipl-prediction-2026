@@ -5,6 +5,7 @@ import { api } from "@/api/api";
 import { validateEmail } from "@/lib/utils";
 import OtpInput from "@/components/OtpInput";
 import { useQueryClient } from "@tanstack/react-query";
+import { members } from "@/data/members";
 
 interface PredictionFormProps {
   matchId: number;
@@ -22,7 +23,8 @@ interface OtpInputProps {
 
 const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled, matchStart }: PredictionFormProps) => {
   const queryClient = useQueryClient();
-  const [email, setEmail] = useState("");
+  //const [email, setEmail] = useState("");
+  const [selectedEmail, setSelectedEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [otpValidated, setOtpValidated] = useState(false);
 
@@ -47,8 +49,12 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled, matchStart }: P
       return;
     }
    //console.log("validateEmail result:", validateEmail(email.trim()));
-    if (!validateEmail(email.trim())) {
+    /*if (!validateEmail(email.trim())) {
       setError("Email not registered.");
+      return;
+    }*/
+	if (!selectedEmail) {
+      setError("Please select your name.");
       return;
     }
 
@@ -93,7 +99,7 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled, matchStart }: P
 
     try {
       const result = await api.submitPrediction({
-        email: email.trim().toLowerCase(),
+        email: selectedEmail.toLowerCase(), //email.trim().toLowerCase(),
         matchNumber: matchId,
 		matchStartUtc: matchStart,
         selectedTeam
@@ -127,14 +133,18 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled, matchStart }: P
       ) : (
         <>
           {/* EMAIL */}
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            disabled={otpValidated || disabled}
-            onChange={(e) => setEmail(e.target.value)}
-            className="bg-secondary/30 border-border text-foreground"
-          />
+          <select
+			  value={selectedEmail}
+			  onChange={(e) => setSelectedEmail(e.target.value)}
+			  className="w-full border rounded-md px-3 py-2 bg-background"
+			>
+			  <option value="">Select your name</option>
+			  {members.map((member) => (
+			    <option key={member.Email} value={member.Email}>
+			      {member.Name} ({member.Group})
+			    </option>
+			  ))}
+		  </select>
 
           {/* OTP INPUT */}
           <OtpInput
@@ -171,7 +181,7 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled, matchStart }: P
           {/* SUBMIT */}
           <Button
             onClick={handleSubmit}
-            disabled={disabled || loading || !selectedTeam || !otpValidated}
+            disabled={disabled || loading || !selectedTeam || !otpValidated || !selectedEmail}
             className="w-full glow-primary"
           >
             {loading ? "Submitting..." : disabled ? "⛔ Submissions Closed" : "Submit Prediction"}
