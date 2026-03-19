@@ -43,7 +43,7 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled }: PredictionFor
       setError("Please enter your email.");
       return;
     }
-
+   console.log("validateEmail result:", validateEmail(email.trim()));
     if (!validateEmail(email.trim())) {
       setError("Email not registered.");
       return;
