@@ -23,12 +23,12 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger()
   ].filter(Boolean),
 
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-    dedupe: ["react", "react-dom"], // ⭐ important fix
+ resolve: {
+  alias: {
+    "@": path.resolve(__dirname, "./src"),
   },
+  dedupe: ["react", "react-dom", "@tanstack/react-query"],
+},
 
   build: {
     sourcemap: false,
