@@ -18,8 +18,9 @@ interface OtpInputProps {
   setOtp: (value: string) => void;
   disabled?: boolean;
 }
-const queryClient = useQueryClient();
+
 const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled }: PredictionFormProps) => {
+  const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [otpValidated, setOtpValidated] = useState(false);
