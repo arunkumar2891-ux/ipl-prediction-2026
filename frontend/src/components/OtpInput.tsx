@@ -10,7 +10,7 @@ interface OtpInputProps {
 const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
 
-  /*const handleChange = (value: string, index: number) => {
+  const handleChange = (value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
     const newOtp = otp.split("");
@@ -22,8 +22,8 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
     if (value && index < 5) {
       inputs.current[index + 1]?.focus();
     }
-  };*/
-  const handleChange = (value: string, index: number) => {
+  };
+  /*const handleChange = (value: string, index: number) => {
   const digits = value.replace(/\D/g, "");
 
   if (!digits) return;
@@ -48,7 +48,7 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
   if (index < 5) {
     inputs.current[index + 1]?.focus();
   }
-};
+};*/
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
@@ -56,7 +56,7 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
     }
   };
 
-  /*const handlePaste = (e: React.ClipboardEvent) => {
+  const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
 
     const pasted = e.clipboardData
@@ -74,9 +74,9 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
 
     const nextIndex = pasted.length < 6 ? pasted.length : 5;
     inputs.current[nextIndex]?.focus();
-  };*/
+  };
   
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  /*const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
   e.preventDefault();
 
   const pastedData = e.clipboardData.getData("text");
@@ -97,7 +97,7 @@ const OtpInput = ({ otp, setOtp, disabled }: OtpInputProps) => {
 
   const focusIndex = Math.min(digits.length - 1, 5);
   inputs.current[focusIndex]?.focus();
-};
+};*/
 
   return (
    <div className="flex gap-2 justify-center w-full max-w-xs mx-auto">
