@@ -135,7 +135,13 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled, matchStart }: P
           {/* EMAIL */}
           <select
 			  value={selectedEmail}
-			  onChange={(e) => setSelectedEmail(e.target.value)}
+			  //onChange={(e) => setSelectedEmail(e.target.value)}
+			  onChange = {(e) => {
+				  setSelectedEmail(e.target.value);
+				  setOtp("");
+				  setOtpValidated(false);
+				  setSelectedTeam("");
+			  }}
 			  className="w-full border rounded-md px-3 py-2 bg-background"
 			>
 			  <option value="">Select your name</option>
@@ -150,11 +156,11 @@ const PredictionForm = ({ matchId, homeTeam, awayTeam, disabled, matchStart }: P
           <OtpInput
 			otp={otp}
 			setOtp={setOtp}
-			disabled={otpValidated}
+			disabled={!selectedEmail || otpValidated}
 		  />
 
           {otpValidated && (
-            <p className="text-xs text-green-500">✅ OTP validated</p>
+            <p className="text-xs text-green-500">✅ OTP validated. You may place your bid.</p>
           )}
 
           {error && <p className="text-xs text-destructive">{error}</p>}
